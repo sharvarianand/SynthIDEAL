@@ -88,7 +88,7 @@ export default function About() {
               {[
                 { name: "Sharvari Bhondekar", icon: <Code className="h-6 w-6 text-primary" /> },
                 { name: "Shruti Gauchandra", icon: <Code className="h-6 w-6 text-primary" /> },
-                { name: "Aman Mehter", icon: <Users className="h-6 w-6 text-primary" /> },
+                { name: "Aman Mehtar", icon: <Users className="h-6 w-6 text-primary" /> },
                 { name: "Roma Dsouza", icon: <Target className="h-6 w-6 text-primary" /> }
               ].map((member, i) => (
                 <Card key={i} className="overflow-hidden hover:shadow-lg transition-all duration-300">

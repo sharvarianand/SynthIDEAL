@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Search, User, Menu, X, Settings, LogOut } from "lucide-react";
+import { Search, User, Menu, X, Settings, LogOut, Bell } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeToggle from "./ThemeToggle";
 import LanguageSelector from "./LanguageSelector";
@@ -13,11 +12,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Badge } from "@/components/ui/badge";
 
 export default function Navbar() {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(3); // Example notification count
   const navigate = useNavigate();
+
+  // Example notifications data
+  const notifications = [
+    { id: 1, title: "New content generated", time: "5 minutes ago", read: false },
+    { id: 2, title: "Your export is ready", time: "1 hour ago", read: false },
+    { id: 3, title: "System update available", time: "2 hours ago", read: true },
+  ];
 
   return (
     <nav className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b">
@@ -61,6 +69,60 @@ export default function Navbar() {
             </div>
             <LanguageSelector />
             <ThemeToggle />
+            
+            {/* Notifications Bell */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative rounded-full h-9 w-9 p-0">
+                  <Bell size={18} />
+                  {notificationCount > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                    >
+                      {notificationCount}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <div className="flex items-center justify-between p-2">
+                  <h4 className="font-medium">Notifications</h4>
+                  <Button variant="ghost" size="sm" className="text-xs">
+                    Mark all as read
+                  </Button>
+                </div>
+                <DropdownMenuSeparator />
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <DropdownMenuItem 
+                      key={notification.id} 
+                      className={cn(
+                        "flex flex-col items-start p-3 cursor-pointer",
+                        !notification.read && "bg-secondary/50"
+                      )}
+                    >
+                      <div className="flex justify-between w-full">
+                        <span className="font-medium">{notification.title}</span>
+                        {!notification.read && (
+                          <span className="h-2 w-2 rounded-full bg-primary"></span>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted-foreground">{notification.time}</span>
+                    </DropdownMenuItem>
+                  ))
+                ) : (
+                  <div className="p-4 text-center text-muted-foreground">
+                    No notifications
+                  </div>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-center cursor-pointer">
+                  View all notifications
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             <Button variant="default" className="font-medium" onClick={() => navigate('/login')}>
               Login
             </Button>
@@ -91,6 +153,59 @@ export default function Navbar() {
 
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center space-x-4">
+            {/* Mobile Notifications Bell */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative rounded-full h-9 w-9 p-0">
+                  <Bell size={18} />
+                  {notificationCount > 0 && (
+                    <Badge 
+                      variant="destructive" 
+                      className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+                    >
+                      {notificationCount}
+                    </Badge>
+                  )}
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80">
+                <div className="flex items-center justify-between p-2">
+                  <h4 className="font-medium">Notifications</h4>
+                  <Button variant="ghost" size="sm" className="text-xs">
+                    Mark all as read
+                  </Button>
+                </div>
+                <DropdownMenuSeparator />
+                {notifications.length > 0 ? (
+                  notifications.map((notification) => (
+                    <DropdownMenuItem 
+                      key={notification.id} 
+                      className={cn(
+                        "flex flex-col items-start p-3 cursor-pointer",
+                        !notification.read && "bg-secondary/50"
+                      )}
+                    >
+                      <div className="flex justify-between w-full">
+                        <span className="font-medium">{notification.title}</span>
+                        {!notification.read && (
+                          <span className="h-2 w-2 rounded-full bg-primary"></span>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted-foreground">{notification.time}</span>
+                    </DropdownMenuItem>
+                  ))
+                ) : (
+                  <div className="p-4 text-center text-muted-foreground">
+                    No notifications
+                  </div>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-center cursor-pointer">
+                  View all notifications
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            
             <ThemeToggle />
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

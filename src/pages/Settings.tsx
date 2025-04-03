@@ -1,8 +1,6 @@
-
 import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { 
-  Bell, 
   Moon, 
   Sun, 
   Globe, 
@@ -161,9 +159,9 @@ export default function Settings() {
                         <Globe className="h-5 w-5 text-muted-foreground" />
                         <select className="bg-background border rounded-md px-3 py-1.5">
                           <option value="en">English</option>
-                          <option value="es">Español</option>
-                          <option value="fr">Français</option>
-                          <option value="de">Deutsch</option>
+                          <option value="es">Hindi</option>
+                          <option value="fr">Marathi</option>
+                          <option value="de">Kannada</option>
                         </select>
                       </div>
                     </div>
